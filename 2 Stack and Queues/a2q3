@@ -105,9 +105,10 @@ int isStackPairwiseConsecutive(Stack *s)
   for (i=0;i<x/2;i++){
         a=pop(s);
         b=pop(s);
-        if (a==b+1||a==b-1) return 1;
+        if (a==b+1||a==b-1) continue;
         else return 0;
   }
+  return 1;
 }
 void push(Stack *s, int item){
    insertNode(&(s->ll), 0, item);
