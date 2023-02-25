@@ -3,7 +3,30 @@
 2. maxHeight()
 --------------------------------------------------------------------------------------------------
 3. maxDepth()
---------------------------------------------------------------------------------------------------
+int c=-1,l,r;
+    if (node==NULL) return -1;
+    l=maxDepth(node->left);
+    if (c<l) c=l;
+    r=maxDepth(node->right);
+    if (c<r) c=r;
+    return c+1;
+    
+    OR
+    
+    
+    if(node == NULL){
+        return -1;
+    }
+    else{
+        int ldepth = maxDepth(node->left);
+        int rdepth = maxDepth(node->right);
+
+        if(ldepth > rdepth) return ldepth+1;
+        else{
+            return rdepth+1;
+        }
+    }
+------------------------------------------------------------------------------------
 4. countOneChildNodes()
 --------------------------------------------------------------------------------------------------
 5. sumOfOddNodes()
@@ -38,6 +61,21 @@ Queue q;
 11. inOrderTraversal()
 --------------------------------------------------------------------------------------------------
 12. preOrderIterative()
+Stack s;
+	 s.top=NULL;
+	 BSTNode *temp;
+	 temp = root;
+
+	 if(temp!=NULL){
+        push(&s,temp);
+        while (!isEmpty(&s)){
+            temp=pop(&s);
+            printf("%d ",temp->item);
+            if (temp->right!=NULL) push(&s,temp->right);
+            if (temp->left!=NULL) push(&s,temp->left);
+        }
+	 }
+	 return;
 --------------------------------------------------------------------------------------------------
 13. postOrderIterativeS1()
 --------------------------------------------------------------------------------------------------
