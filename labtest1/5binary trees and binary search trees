@@ -1,4 +1,21 @@
 1. identical()
+2. maxHeight()
+3. maxDepth()
+4. countOneChildNodes()
+5. sumOfOddNodes()
+6. mirroeTree()
+7. printSmallestValues()
+8. smallestValue()
+9. hasGreatGrandchild()
+10. levelOrderTraversal()
+11. inOrderTraversal()
+12. preOrderIterative()
+13. postOrderIterativeS1()
+14. postOrderIterativeS2()
+15. printBSTInOrder()
+16. isBST()
+--------------------------------------------------------------------------------------------------
+1. identical()
 --------------------------------------------------------------------------------------------------
 2. maxHeight()
 --------------------------------------------------------------------------------------------------
