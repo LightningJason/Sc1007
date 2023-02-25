@@ -8,14 +8,26 @@
 8. smallestValue()
 9. hasGreatGrandchild()
 10. levelOrderTraversal()
-11. inOrderTraversal()
+11. inOrderTraversal() //using stack and iterative
 12. preOrderIterative()
-13. postOrderIterativeS1()
-14. postOrderIterativeS2()
+13. postOrderIterativeS1() //using stack and iterative
+14. postOrderIterativeS2() //using 2 stacks and while loop
 15. printBSTInOrder()
 16. isBST()
 --------------------------------------------------------------------------------------------------
 1. identical()
+   if ((tree1==NULL)!=(tree2==NULL)) return 0;
+   if (tree1==NULL && tree2==NULL) return 1;
+   if (!identical(tree1->left,tree2->left)){
+        return 0;
+   }
+    if (!identical(tree1->right,tree2->right)){
+        return 0;
+    }
+    if (tree1->item!=tree2->item) return 0;
+   //if ((tree1->left!=tree2->right)||(tree1->right!=tree2->right)) return 0;
+
+   return 1;
 --------------------------------------------------------------------------------------------------
 2. maxHeight()
 --------------------------------------------------------------------------------------------------
@@ -76,6 +88,22 @@ Queue q;
     }
     ------------------------------------------------------------------------------------------------
 11. inOrderTraversal()
+	Stack s;
+	 s.top=NULL;
+	 BSTNode *temp;
+	 temp=root;
+
+    if (temp==NULL) return;
+    push(&s,temp);
+    inOrderTraversal(temp->left);
+    while (!isEmpty(&s)){
+        temp=pop(&s);
+        printf("%d ",temp->item);
+        if(temp->right!=NULL){
+            inOrderTraversal(temp->right);
+
+        }
+    }
 --------------------------------------------------------------------------------------------------
 12. preOrderIterative()
 Stack s;
@@ -95,8 +123,51 @@ Stack s;
 	 return;
 --------------------------------------------------------------------------------------------------
 13. postOrderIterativeS1()
+Stack s;
+    s.top=NULL;
+    BSTNode *temp,*t;
+    temp=root;
+
+    while (temp!=NULL){
+        if (temp->right!=NULL) push(&s,temp->right);
+        if (temp!=NULL) push(&s,temp);
+        temp=temp->left;
+    }
+    while(!isEmpty(&s)){
+
+        temp = pop(&s);
+
+        if ((temp->right)!=NULL && peek(&s)==(temp->right)){
+        t=pop(&s);
+        push(&s,temp);
+        postOrderIterativeS1(t);
+        }
+        else {
+        printf("%d ",temp->item);
+        temp=NULL;
+        }
+    }
+    return;
 --------------------------------------------------------------------------------------------------
 14. postOrderIterativeS2()
+Stack s1,s2;
+	 s1.top=NULL;
+	 s2.top=NULL;
+	 BSTNode *temp;
+	 temp=root;
+	 push(&s1,temp);
+	 while(!isEmpty(&s1)){
+        temp=pop(&s1);
+        push(&s2,temp);
+        if (temp->left!=NULL) push(&s1,temp->left);
+        if(temp->right!=NULL) push(&s1,temp->right);
+
+ 	 }
+ 	 while (!isEmpty(&s2)) {
+            temp=pop(&s2);
+            printf("%d ",temp->item);
+     }
+ 	 return;
 --------------------------------------------------------------------------------------------------
 15. printBSTInOrder()
 --------------------------------------------------------------------------------------------------
