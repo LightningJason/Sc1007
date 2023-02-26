@@ -16,18 +16,21 @@
 16. isBST()
 --------------------------------------------------------------------------------------------------
 1. identical()
+	if (tree1==NULL && tree2==NULL) return 1;
    if ((tree1==NULL)!=(tree2==NULL)) return 0;
-   if (tree1==NULL && tree2==NULL) return 1;
+
+   if (tree1->item!=tree2->item) return 0;
+   /*
    if (!identical(tree1->left,tree2->left)){
         return 0;
    }
+
     if (!identical(tree1->right,tree2->right)){
         return 0;
     }
-    if (tree1->item!=tree2->item) return 0;
-   //if ((tree1->left!=tree2->right)||(tree1->right!=tree2->right)) return 0;
 
-   return 1;
+   return 1;*/
+   return identical(tree1->left, tree2->left) && identical(tree1->right, tree2->right);
 --------------------------------------------------------------------------------------------------
 2. maxHeight()
 --------------------------------------------------------------------------------------------------
@@ -130,7 +133,7 @@ Stack s;
 
     while (temp!=NULL){
         if (temp->right!=NULL) push(&s,temp->right);
-        if (temp!=NULL) push(&s,temp);
+        push(&s,temp);
         temp=temp->left;
     }
     while(!isEmpty(&s)){
@@ -138,15 +141,14 @@ Stack s;
         temp = pop(&s);
 
         if ((temp->right)!=NULL && peek(&s)==(temp->right)){
-        t=pop(&s);
+        pop(&s);
         push(&s,temp);
-        postOrderIterativeS1(t);
+        postOrderIterativeS1(temp->right);
         }
         else {
         printf("%d ",temp->item);
         temp=NULL;
         }
-    }
     return;
 --------------------------------------------------------------------------------------------------
 14. postOrderIterativeS2()
@@ -154,8 +156,9 @@ Stack s1,s2;
 	 s1.top=NULL;
 	 s2.top=NULL;
 	 BSTNode *temp;
-	 temp=root;
-	 push(&s1,temp);
+
+	 push(&s1,root);
+
 	 while(!isEmpty(&s1)){
         temp=pop(&s1);
         push(&s2,temp);
@@ -167,7 +170,7 @@ Stack s1,s2;
             temp=pop(&s2);
             printf("%d ",temp->item);
      }
- 	 return;
+     return;
 --------------------------------------------------------------------------------------------------
 15. printBSTInOrder()
 --------------------------------------------------------------------------------------------------
