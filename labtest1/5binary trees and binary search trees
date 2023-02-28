@@ -2,7 +2,7 @@
 2. maxHeight(1) p1
 3. maxDepth()
 4. countOneChildNodes(1) p2
-5. sumOfOddNodes() p3
+5. sumOfOddNodes(1) p3
 6. mirrorTree(1) l3q1
 7. printSmallestValues(1) l3q2
 8. smallestValue(1) l3q3
@@ -78,6 +78,10 @@ int c=-1,l,r;
     return (c+countOneChildNodes(node->left)+countOneChildNodes(node->right));
 --------------------------------------------------------------------------------------------------
 5. sumOfOddNodes()
+int c=0;
+    if (node==NULL) return 0;
+    if (node->item%2==1) c=1;
+    return (c+sumOfOddNodes(node->left)+sumOfOddNodes(node->right));
 --------------------------------------------------------------------------------------------------
 6. mirrorTree()
 // write your code here(can just replace cur with node and it will work the same)
