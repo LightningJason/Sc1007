@@ -9,6 +9,7 @@
 9. reverseStack(1) t2q1
 10. reverseFirstKItems(1) t2q2
 11. sortStack(1) t2q3
+12E Where the practice questions?
 --------------------------------------------------------------------------------------------------
 1. createQueueFromLinkedList()
 int x=ll->size, i;
