@@ -5,7 +5,10 @@
 5. removeUntil(1) l2q1
 6. recursiveReverse(1) l2q2
 7. palindrom(1) l2q3
-E8. balanced(1) l2q4
+8. balance(1) l2q4
+9. reverseStack(1) t2q1
+10. reverseFirstKItems(1) t2q2
+11. sortStack(1) t2q3
 --------------------------------------------------------------------------------------------------
 1. createQueueFromLinkedList()
 int x=ll->size, i;
@@ -159,7 +162,7 @@ printf("%s\n", word);
      printf("The string is a palindrome\n");
      return 0;*/
 --------------------------------------------------------------------------------------------------
-E8. balanced()
+8. balance() 
 Stack s;
 	s.ll.head=NULL;
 	s.ll.size=0;
@@ -197,3 +200,145 @@ Stack s;
         return 1;
     }
     return 0;*/
+--------------------------------------------------------------------------------------------------
+9. reverseStack()
+/* add your code here*/
+	int a=(s->ll).size,i=0;
+	Queue q;
+	q.ll.head=NULL;
+	q.ll.size=0;
+	q.ll.tail=NULL;
+
+	for (i=0;i<a;i++){
+        enqueue(&q,pop(s));
+	}
+	for (i=0;i<a;i++){
+
+        push(s,dequeue(&q));
+	}
+
+	/*
+	int item;
+	Queue q;
+
+	q.ll.head = NULL;
+	q.ll.size = 0;
+
+	while (!isEmptyStack(s))
+	{
+		enqueue(&q, pop(s));
+	}
+
+	while (!isEmptyQueue(&q))
+	{
+		push(s, dequeue(&q));
+	}
+	*/
+
+
+}
+/* Answer
+{
+
+    int item;
+     Queue q;
+     q.ll.head = NULL;
+     q.ll.size = 0;
+
+     while (!isEmptyStack(s)){
+          enqueue(&q, pop(s));
+     }
+
+     while (!isEmptyQueue(&q)){
+          push(s, dequeue(&q));
+     }
+
+
+}*/
+--------------------------------------------------------------------------------------------------
+10. reverseFirstKItems()
+Stack s;
+    s.ll.head=NULL;
+    s.ll.tail=NULL;
+    s.ll.size=0;
+    int i,a=(q->ll).size;
+    a-=k;
+    for (i=0;i<k;i++){
+        push(&s,dequeue(q));
+    }
+    for (i=0;i<k;i++){
+        enqueue(q,pop(&s));
+    }
+    for (i=0;i<a;i++){
+        enqueue(q,dequeue(q));
+    }
+    /*
+    Stack s;
+    int i , j;
+
+    if(k <= 0)
+        return;
+    if(isEmptyQueue(q) || k > q->ll.size)
+        return;
+
+    s.ll.head = NULL;
+    s.ll.tail = NULL;
+    s.ll.size = 0;
+
+
+
+    for(i=0; i < k; i++){
+        push(&s,dequeue(q));
+    }
+
+    while(!isEmptyStack(&s)){
+        enqueue(q,pop(&s));
+    }
+    j = q->ll.size;
+
+    for(i=0; i< j-k;i++){
+        enqueue(q,dequeue(q));
+    }
+    */
+--------------------------------------------------------------------------------------------------
+11. sortStack()
+Stack ss;
+    ss.ll.head=NULL;
+    ss.ll.size=0;
+
+    /*
+    int i,j,o,m=0,t=(s->ll).size,c,k;
+    k=t;
+    for (i=0;i<k;i++){
+    for (j=0;j<t;j++){
+        c=pop(s);
+        if (c>m){
+            if(m!=0){push(&ss,m);}
+            m=c;
+    }
+        else push(&ss,c);
+    }
+    push(s,m);
+    t--;
+    for (o=0;o<t;o++) push(s,pop(&ss));
+    m=0;
+}*/
+    //model answer
+    int temp;
+    Stack ts;
+    ts.ll.head = NULL;
+    ts.ll.tail = NULL;
+    ts.ll.size = 0;
+
+    while(!isEmptyStack(s)){
+        push(&ts,pop(s));
+    }
+
+    while(!isEmptyStack(&ts)){
+        temp = pop(&ts);
+
+       while(!isEmptyStack(s) && peek(s) < temp){
+           push(&ts,pop(s));
+       }
+        push(s,temp);
+    }
