@@ -1,19 +1,22 @@
-1. identical()
-2. maxHeight()
+1. identical(1) a3q1
+2. maxHeight(1) p1
 3. maxDepth()
-4. countOneChildNodes()
-5. sumOfOddNodes()
-6. mirroeTree()
-7. printSmallestValues()
-8. smallestValue()
-9. hasGreatGrandchild()
+4. countOneChildNodes(1) p2
+5. sumOfOddNodes() p3
+6. mirrorTree(1) l3q1
+7. printSmallestValues(1) l3q2
+8. smallestValue(1) l3q3
+9. hasGreatGrandchild(1) l3q4
 10. levelOrderTraversal()
-11. inOrderTraversal() //using stack and iterative
+11. inOrderTraversal(1) a3q2 //using stack and iterative
 12. preOrderIterative()
-13. postOrderIterativeS1() //using stack and iterative
-14. postOrderIterativeS2() //using 2 stacks and while loop
-15. printBSTInOrder()
-16. isBST()
+13. postOrderIterativeS1(1) a3q3 //using stack and iterative
+14. postOrderIterativeS2(1) a3q4 //using 2 stacks and while loop
+15. printBSTInOrder(1) l4q2
+16. isBST(1) l4q3
+E17 insertBSTNode(1) l4q1
+E18 removeBSTNode(1) l4q4
+
 --------------------------------------------------------------------------------------------------
 1. identical()
 	if (tree1==NULL && tree2==NULL) return 1;
@@ -33,6 +36,13 @@
    return identical(tree1->left, tree2->left) && identical(tree1->right, tree2->right);
 --------------------------------------------------------------------------------------------------
 2. maxHeight()
+int x=-1,l,r;
+    if (node==NULL) return -1;
+    l=maxHeight(node->left);
+    r=maxHeight(node->right);
+    if(r>l) l=r;
+    if(l>x) x=l;
+    return x+1;
 --------------------------------------------------------------------------------------------------
 3. maxDepth()
 int c=-1,l,r;
@@ -60,16 +70,63 @@ int c=-1,l,r;
     }
 ------------------------------------------------------------------------------------
 4. countOneChildNodes()
+	int c=0;
+    if (node==NULL) return 0;
+    if ((node->left!=NULL&&node->right==NULL)||(node->left==NULL&&node->right!=NULL)){
+        c=1;
+    }
+    return (c+countOneChildNodes(node->left)+countOneChildNodes(node->right));
 --------------------------------------------------------------------------------------------------
 5. sumOfOddNodes()
 --------------------------------------------------------------------------------------------------
-6. mirroeTree()
+6. mirrorTree()
+// write your code here(can just replace cur with node and it will work the same)
+	BTNode *temp,*cur;
+	cur=node;
+	//if nothing
+	if (cur==NULL) return;
+	//left side
+	mirrorTree(cur->left);
+	//right side
+	mirrorTree(cur->right);
+	//swap here
+	temp = cur->left;
+	cur->left=cur->right;
+	cur->right = temp;
+	return;
 --------------------------------------------------------------------------------------------------
 7. printSmallestValues()
+if (node==NULL) return;
+    if (node->item<m){
+        printf(" %d",node->item);
+    }
+    printSmallerValues(node->left,m);
+    printSmallerValues(node->right,m);
+    return;
 --------------------------------------------------------------------------------------------------
 8. smallestValue()
+int l, r,c;
+
+	if (node==NULL) return 100;
+    c=node->item;
+	l=smallestValue(node->left);
+	if (l<c) c=l;
+
+	r=smallestValue(node->right);
+	if (r<c) c=r;
+	return c;
 --------------------------------------------------------------------------------------------------
 9. hasGreatGrandchild()
+	int n=0,l,r,c=0;
+    if (node==NULL) return 0;
+    l=hasGreatGrandchild(node->left);
+    if (c<l) c=l;
+    r=hasGreatGrandchild(node->right);
+    if (c<r) c=r;
+    if (c==3) {
+            printf("%d",node->item);
+    }
+    return c+1;
 --------------------------------------------------------------------------------------------------
 10. levelOrderTraversal()
 Queue q;
@@ -173,5 +230,81 @@ Stack s1,s2;
      return;
 --------------------------------------------------------------------------------------------------
 15. printBSTInOrder()
+if (node==NULL) return;
+
+	printBSTInOrder(node->left);
+	printf("%d",node->item);
+	printBSTInOrder(node->right);
+	return;
+
+}
+int isBST(BTNode *node, int min, int max) // the item stored in node has to be smaller than max and larger than min
+{
+	// write your code here
+	if(node==NULL) return 1;
+
+    if (node->item>=max||node->item<=min) return 0;
+
+	return isBST(node->left,min,node->item)&&isBST(node->right,node->item,max);
 --------------------------------------------------------------------------------------------------
 16. isBST()
+if(node==NULL) return 1;
+
+    if (node->item>=max||node->item<=min) return 0;
+
+	return isBST(node->left,min,node->item)&&isBST(node->right,node->item,max);
+--------------------------------------------------------------------------------------------------
+E17 insertBSTNode()
+if (*node==NULL){
+        *node=malloc(sizeof(BTNode));
+        (*node)->item=value;
+        (*node)->left=NULL;
+        (*node)->right=NULL;
+        return;
+	}
+
+
+
+	if ((*node)->item>value){
+        insertBSTNode(&((*node)->left),value);
+	}
+	else if ((*node)->item<value){
+        insertBSTNode(&((*node)->right),value);
+	}
+	else //(*node)->item==value, value already exists hence will not be inserted
+    {
+        printf("Already exists in the BST\n");
+        return;
+    }
+	return;
+--------------------------------------------------------------------------------------------------
+E18 removeBSTNode()
+BTNode *p;
+	if (node==NULL){
+        printf("cant find node\n");
+        return NULL;
+	}
+
+	if (node->item>value){
+        removeBSTNode(node->left,value);
+	}
+	if (node->item<value){
+        removeBSTNode(node->right,value);
+	}
+	if (node->item==value){
+        if (node->left!=NULL&&node->right!=NULL){
+            p=findMin(node);
+            node->item=p->item;
+            node->right=removeBSTNode(node->right,p->item);
+
+        }
+        else //one or zero child
+        {
+            p=node;
+            if(node->left!=NULL) node=node->left;
+            else node=node->right;
+            free(p);
+        }
+	}
+	return node;
+--------------------------------------------------------------------------------------------------
