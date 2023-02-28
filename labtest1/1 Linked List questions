@@ -1,22 +1,96 @@
-1. insertSortedLL()
-2. alternateMergeLL()
-3. moveoddItemsToBackLL()
-4. frontBackSplitLL()
+1. insertSortedLL(1) a1q1
+2. alternateMergeLL(1) a1q2
+3. moveoddItemsToBackLL(1) a1q3
+4. frontBackSplitLL(1) a1q4
 5. moveEvenItemsToBackLL(1) t1q2
 6. moveMaxToFrontLL(1) t1q3
 7. removeDuplicatesSortedLL(1) t1q4
 8. split(1) l1q3
 9. duplicateReverse() l1q4
-10. concatenate()
-11. combineAlternating()
+10. concatenate(1) practice quesstion, have not confirmed answers
+11. combineAlternating(1) practice question, have not confirmed answers
+E12. insertDbl() practice question can try
 --------------------------------------------------------------------------------------------------
 1. insertSortedLL()
+ListNode *cur;
+	int i=0;
+	//empty list
+	if (ll->size==0){
+        insertNode(ll,0,item);
+        return 0;
+	}
+	//at least one in list
+	cur=ll->head;
+
+	while(cur!=NULL){
+        if(cur->item==item) return -1;
+        if (cur->item<item){
+            i++;
+
+            cur=cur->next;
+        }
+
+        //account for max number entered
+        if (i>=ll->size){
+            insertNode(ll,ll->size,item);
+            return (ll->size)-1;
+        }
+        if (cur->item>item){
+            insertNode(ll,i,item);
+            return i;
+        }
+        }
 --------------------------------------------------------------------------------------------------
 2. alternateMergeLL()
+ListNode *cur;
+    int i=1;
+	cur=ll1->head;
+	while (cur!=NULL){
+        if(ll2->head==NULL) return;
+	    if(cur->next==NULL){
+            insertNode(ll1,i,ll2->head->item);
+            removeNode(ll2,0);
+            return;
+	    }
+        insertNode(ll1,i,ll2->head->item);
+        removeNode(ll2,0);
+        i+=2;
+        cur=cur->next->next;
+	}
 --------------------------------------------------------------------------------------------------
 3. moveoddItemsToBackLL()
+ListNode *cur;
+	int i,x=0;
+	cur=ll->head;
+	for(i=0;i<ll->size;i++){
+        if ((cur->item)%2==1){
+            insertNode(ll,ll->size,cur->item);
+            cur=cur->next;
+            removeNode(ll,x);
+        }
+        else {cur=cur->next; x++;
+        }
+	}
+	return;
+
 --------------------------------------------------------------------------------------------------
 4. frontBackSplitLL()
+int x=ll->size;
+	int a,b,i;
+    a=x/2;
+	if (x%2==1) a+=1;
+	b=x-a;
+	ListNode *cur;
+
+	cur=ll->head;
+	for (i=0;i<a;i++){
+        insertNode(resultFrontList,i,cur->item);
+        cur=cur->next;
+	}
+	for (i=0;i<b;i++){
+        insertNode(resultBackList,i,cur->item);
+        cur=cur->next;
+	}
 --------------------------------------------------------------------------------------------------
 5. moveEvenItemsToBackLL()
 ListNode *cur;
@@ -123,5 +197,39 @@ if (cur==NULL) return -1;
 	return 0;
 --------------------------------------------------------------------------------------------------
 10. concatenate()
+	if (head2==NULL) return 0;
+	if (*ptrHead1==NULL) *ptrHead1=head2;
+	ListNode *cur;
+	cur=*ptrHead1;
+	while (cur->next!=NULL) cur=cur->next;
+
+	cur->next=head2;
+	return 0;
 --------------------------------------------------------------------------------------------------
 11. combineAlternating()
+if (head2==NULL){
+       *ptrHead=head1;
+       return 0;}
+
+	if (head1==NULL){
+        *ptrHead=head2;
+        return 0;
+	}
+
+	ListNode *h1=head1, *h2=head2;
+	int i=0;
+	while (h1!=NULL && h2!=NULL){
+        if (h1!=NULL){
+            insertNode(&(*ptrHead),i,h1->num);
+            i++;
+            h1=h1->next;
+        }
+        if (h2!=NULL){
+            insertNode(&(*ptrHead),i,h2->num);
+            i++;
+            h2=h2->next;
+        }
+	}
+
+    if (h1==NULL && h2==NULL) return 0;
+    return -1;
