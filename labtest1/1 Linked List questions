@@ -2,11 +2,11 @@
 2. alternateMergeLL()
 3. moveoddItemsToBackLL()
 4. frontBackSplitLL()
-5. moveEvenItemsToBackLL(1)
-6. moveMaxToFrontLL(1)
-7. removeDuplicatesSortedLL()
-8. split()
-9. duplicateReverse()
+5. moveEvenItemsToBackLL(1) t1q2
+6. moveMaxToFrontLL(1) t1q3
+7. removeDuplicatesSortedLL(1) t1q4
+8. split(1) l1q3
+9. duplicateReverse() l1q4
 10. concatenate()
 11. combineAlternating()
 --------------------------------------------------------------------------------------------------
@@ -74,10 +74,53 @@ ListNode *pre, *cur;
 	return 0;
 --------------------------------------------------------------------------------------------------
 7. removeDuplicatesSortedLL()
+/* add your code here */
+	if (ll->size<=1) return;
+	ListNode *cur;
+	int i,j=1,x,y=ll->size;
+	cur=ll->head->next;
+	x=ll->head->item;
+
+	//test for size>1
+	for (i=0;i<y-1;i++){
+        if (cur->item==x){
+            cur=cur->next;
+            removeNode(ll,j);
+        }
+        else{
+            x=cur->item;
+            j++;
+            cur=cur->next;
+        }
 --------------------------------------------------------------------------------------------------
 8. split()
+/* Write your program code here. */
+    ListNode *temp;
+    int x=1,a=0,b=0;
+    while (cur!=NULL){
+        if (x==1){
+            insertNode(ptrEvenList,a,cur->item);
+            x=-x;
+            a++;
+        }
+        else{
+            insertNode(ptrOddList,b,cur->item);
+            x=-x;
+            b++;
+        }
+        cur=cur->next;
+    }
+    return 0;
 --------------------------------------------------------------------------------------------------
 9. duplicateReverse()
+if (cur==NULL) return -1;
+    // Simply traverse the list and insert each visited node into the new list at index 0 each time
+	while (cur != NULL){
+		if (insertNode(ptrNewHead, 0, cur->item) == -1)
+			return -1;
+		cur = cur ->next;
+	}
+	return 0;
 --------------------------------------------------------------------------------------------------
 10. concatenate()
 --------------------------------------------------------------------------------------------------
