@@ -1,28 +1,35 @@
-1. identical(1) a3q1
+1. int identical(BTNode *tree1, BTNode *tree2) a3q1 //2line1 1return
 2. maxHeight(1) p1
 3. maxDepth()
 4. countOneChildNodes(1) p2
 5. sumOfOddNodes(1) p3
-6. mirrorTree(1) l3q1
+6. void mirrorTree(BTNode *node) l3q1
 7. printSmallestValues(1) l3q2
 8. smallestValue(1) l3q3
 9. hasGreatGrandchild(1) l3q4
 10. levelOrderTraversal()
-11. inOrderTraversal(1) a3q2 //using stack and iterative
+11. void inOrderTraversal(BSTNode *root) a3q2 //make stack, push left till null, while notempty, pop+print+recurvsive right
 12. preOrderIterative()
-13. postOrderIterativeS1(1) a3q3 //using stack and iterative
-14. postOrderIterativeS2(1) a3q4 //using 2 stacks and while loop
+13. void postOrderIterativeS1(BSTNode *root) a3q3 //make stack,push right then temp then go left till null,while not empty, ifright then change then recursive right,else print
+14. void postOrderIterativeS2(BSTNode *root) a3q4 //make2stack, pushroot to s1, whiles1 notempty(pop1push2,pushleftpushrights1),prints2
 15. printBSTInOrder(1) l4q2
 16. isBST(1) l4q3
 E17 insertBSTNode(1) l4q1
 E18 removeBSTNode(1) l4q4
 
 --------------------------------------------------------------------------------------------------
-1. identical()
-	if (tree1==NULL && tree2==NULL) return 1;
-   if ((tree1==NULL)!=(tree2==NULL)) return 0;
+1. int identical(BTNode *tree1, BTNode *tree2)
 
-   if (tree1->item!=tree2->item) return 0;
+	if (tree1==NULL && tree2==NULL) return 1;
+	
+   	if ((tree1==NULL)!=(tree2==NULL)) return 0;
+
+  	if (tree1->item!=tree2->item) return 0;
+	
+  	return identical(tree1->left, tree2->left) && identical(tree1->right, tree2->right);
+   
+   
+   
    /*
    if (!identical(tree1->left,tree2->left)){
         return 0;
@@ -33,7 +40,7 @@ E18 removeBSTNode(1) l4q4
     }
 
    return 1;*/
-   return identical(tree1->left, tree2->left) && identical(tree1->right, tree2->right);
+
 --------------------------------------------------------------------------------------------------
 2. maxHeight()
 int x=-1,l,r;
@@ -83,20 +90,19 @@ int c=0;
     if (node->item%2==1) c=1;
     return (c+sumOfOddNodes(node->left)+sumOfOddNodes(node->right));
 --------------------------------------------------------------------------------------------------
-6. mirrorTree()
+6. void mirrorTree(BTNode *node)
 // write your code here(can just replace cur with node and it will work the same)
-	BTNode *temp,*cur;
-	cur=node;
+	BTNode *temp;
 	//if nothing
-	if (cur==NULL) return;
+	if (node==NULL) return;
 	//left side
-	mirrorTree(cur->left);
+	mirrorTree(node->left);
 	//right side
-	mirrorTree(cur->right);
+	mirrorTree(node->right);
 	//swap here
-	temp = cur->left;
-	cur->left=cur->right;
-	cur->right = temp;
+	temp = node->left;
+	node->left=node->right;
+	node->right = temp;
 	return;
 --------------------------------------------------------------------------------------------------
 7. printSmallestValues()
@@ -186,7 +192,7 @@ Stack s;
 	 }
 	 return;
 --------------------------------------------------------------------------------------------------
-13. postOrderIterativeS1()
+13. void postOrderIterativeS1(BSTNode *root)
 Stack s;
     s.top=NULL;
     BSTNode *temp,*t;
@@ -206,13 +212,11 @@ Stack s;
         push(&s,temp);
         postOrderIterativeS1(temp->right);
         }
-        else {
-        printf("%d ",temp->item);
-        temp=NULL;
-        }
+        else printf("%d ",temp->item);
+	}
     return;
 --------------------------------------------------------------------------------------------------
-14. postOrderIterativeS2()
+14. void postOrderIterativeS2(BSTNode *root)
 Stack s1,s2;
 	 s1.top=NULL;
 	 s2.top=NULL;
