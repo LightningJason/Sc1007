@@ -1,7 +1,7 @@
-1. createQueueFromLinkedList(1) a2q1
-2. createStackFromLinkedList(1) a2q2
-3. isStackPairwiseConsecutive(1) a2q3
-4. reverseQueue(1) a2q4
+1. void createQueueFromLinkedList(LinkedList *ll, Queue *q) a2q1 //1cur,1i,1while,1for
+2. void createStackFromLinkedList(LinkedList *ll, Stack *s) a2q2 //1cur,2siz,i,empty,sanity,for
+3. int isStackPairwiseConsecutive(Stack *s) a2q3 //4siz,i,a,b ,sanity2, 1for
+4. void reverse(Queue *q) a2q4 //1stack, 2while
 5. removeUntil(1) l2q1
 6. recursiveReverse(1) l2q2
 7. palindrom(1) l2q3
@@ -9,72 +9,57 @@
 9. reverseStack(1) t2q1
 10. reverseFirstKItems(1) t2q2
 11. sortStack(1) t2q3
-12E Where the practice questions?
+12E void removeOddValues(Queue *q) a2q1 part 2 //3xsi,sanity,1for
+13E void removeEvenValues(Stack *s) a2q2 part 2 //Stack s2,3siz,i,t,sanity,1for,transferback
 --------------------------------------------------------------------------------------------------
-1. createQueueFromLinkedList()
-int x=ll->size, i;
-	ListNode *temp;
-
-	//empty queue
-	while(!isEmptyQueue(q)){
-        dequeue(q);
-	}
-	//sanity check
-    if (x==0) return;
-	//add
-	temp=ll->head;
-	for (i=0;i<x;i++){
-	enqueue(q,temp->item);
-	temp=temp->next;
+1. void createQueueFromLinkedList(LinkedList *ll, Queue *q)
+	int i;
+	ListNode *cur;
+	
+	while (!isEmptyQueue(q)) dequeue(q);
+	
+	if (ll->size==0) return;
+	cur=ll->head;
+	for (i=0;i<ll->size;i++){
+        enqueue(q,cur->item);
+        cur=cur->next;
 	}
 	return;
 --------------------------------------------------------------------------------------------------
-2. createStackFromLinkedList()
-int x=ll->size,i;
-	ListNode *temp;
-	//empty list
+2. void createStackFromLinkedList(LinkedList *ll, Stack *s)
+	int siz=ll->size,i;
+	ListNode *cur;
+
 	while(!isEmptyStack(s)) pop(s);
 
-	//sanity check
-	if (x==0) return;
-	temp=ll->head;
-	for(i=0;i<x;i++){
-        push(s,temp->item);
-        temp=temp->next;
+	if(siz==0) return;
+	cur=ll->head;
+	for (i=0;i<siz;i++){
+        push(s,cur->item);
+        cur=cur->next;
 	}
 	return;
 --------------------------------------------------------------------------------------------------
-3. isStackPairwiseConsecutive()
-int x=s->ll.size,i,a,b;
-  if (x==0) return 0;
-  if (x%2==1) return 0;
-  for (i=0;i<x/2;i++){
+3. int isStackPairwiseConsecutive(Stack *s)
+int siz=s->ll.size,i,a,b;
+  if (siz==0) return 0;
+  if (siz%2==1) return 0;
+  for (i=0;i<siz/2;i++){
         a=pop(s);
         b=pop(s);
         if (a==b+1||a==b-1) continue;
         else return 0;
   }
   return 1;
-}
-void push(Stack *s, int item){
-   insertNode(&(s->ll), 0, item);
-}
 
-int pop(Stack *s){
-   int item;
-   if(!isEmptyStack(s)){
-    item = ((s->ll).head)->item;
-    removeNode(&(s->ll), 0);
-    return item;
-   }
-    return INT_MIN;
+
 --------------------------------------------------------------------------------------------------
-4. reverseQueue()
+4. void reverse(Queue *q)
     Stack s;
     s.ll.head=NULL;
     s.ll.size=0;
 
-    while(!isEmptyQueue(q))push(&s,dequeue(q));
+    while(!isEmptyQueue(q)) push(&s,dequeue(q));
     while(!isEmptyStack(&s)) enqueue(q,pop(&s));
     return;
 --------------------------------------------------------------------------------------------------
@@ -343,3 +328,29 @@ Stack ss;
        }
         push(s,temp);
     }
+--------------------------------------------------------------------------------------------------
+12E void removeOddValues(Queue *q) a2q1 part 2
+	int i,x,s=(q->ll).size;
+	if (s==0) return;
+	for (i=0;i<s;i++){
+        x=dequeue(q);
+        if (x%2==0) enqueue(q,x);
+	}
+	return;
+--------------------------------------------------------------------------------------------------
+13E void removeEvenValues(Stack *s) a2q2 part 2
+	Stack s2;
+	s2.ll.head=NULL;
+	s2.ll.size=0;
+	int siz=s->ll.size,i,t;
+
+	if(siz==0) return;
+
+	for (i=0;i<siz;i++){
+        t=pop(s);
+        if (t%2==1) push(&s2,t);
+	}
+    while(!isEmptyStack(&s2)) push(s,pop(&s2));
+    return;
+--------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------
