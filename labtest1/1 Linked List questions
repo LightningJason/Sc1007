@@ -1,9 +1,9 @@
-1. insertSortedLL(1) a1q1
-2. alternateMergeLL(1) a1q2
-3. moveoddItemsToBackLL(1) a1q3
-4. frontBackSplitLL(1) a1q4
-5. moveEvenItemsToBackLL(1) t1q2
-6. moveMaxToFrontLL(1) t1q3
+1. int insertSortedLL(LinkedList *ll, int item) a1q1 //1LN,1i,empty,at least one
+2. void alternateMergeLinkedList(LinkedList *ll1, LinkedList *ll2) a1q2 //1LN,1i,1while
+3. void moveOddItemsToBack(LinkedList *ll)) a1q3 //1LN,2ix,1for
+4. void frontBackSplitLinkedList(LinkedList *ll, LinkedList *resultFrontList, LinkedList *resultBackList) a1q4 //1cur, 4xabi, 2for
+5. moveEvenItemsToBack(LinkedList *ll) t1q2 //1LN,2ix,1for
+6. moveMaxToFront(ListNode **ptrHead) t1q3 //3pre,cur,preMax 1maxItem, c1 empty,c2 one, c3 rest, 1while, c1 first highest, c2rest
 7. removeDuplicatesSortedLL(1) t1q4
 8. split(1) l1q3
 9. duplicateReverse() l1q4
@@ -11,8 +11,8 @@
 11. combineAlternating(1) practice question, have not confirmed answers
 E12. insertDbl() practice question can try
 --------------------------------------------------------------------------------------------------
-1. insertSortedLL()
-ListNode *cur;
+1. int insertSortedLL(LinkedList *ll, int item)
+	ListNode *cur;
 	int i=0;
 	//empty list
 	if (ll->size==0){
@@ -21,6 +21,7 @@ ListNode *cur;
 	}
 	//at least one in list
 	cur=ll->head;
+	}
 
 	while(cur!=NULL){
         if(cur->item==item) return -1;
@@ -41,13 +42,13 @@ ListNode *cur;
         }
         }
 --------------------------------------------------------------------------------------------------
-2. alternateMergeLL()
-ListNode *cur;
-    int i=1;
+2. void alternateMergeLinkedList(LinkedList *ll1, LinkedList *ll2)
+	ListNode *cur;
+    	int i=1;
 	cur=ll1->head;
 	while (cur!=NULL){
         if(ll2->head==NULL) return;
-	    if(cur->next==NULL){
+	if(cur->next==NULL){
             insertNode(ll1,i,ll2->head->item);
             removeNode(ll2,0);
             return;
@@ -58,7 +59,7 @@ ListNode *cur;
         cur=cur->next->next;
 	}
 --------------------------------------------------------------------------------------------------
-3. moveoddItemsToBackLL()
+3. void moveOddItemsToBack(LinkedList *ll)
 ListNode *cur;
 	int i,x=0;
 	cur=ll->head;
@@ -74,7 +75,7 @@ ListNode *cur;
 	return;
 
 --------------------------------------------------------------------------------------------------
-4. frontBackSplitLL()
+4. void frontBackSplitLinkedList(LinkedList *ll, LinkedList *resultFrontList, LinkedList *resultBackList)
 int x=ll->size;
 	int a,b,i;
     a=x/2;
@@ -92,30 +93,26 @@ int x=ll->size;
         cur=cur->next;
 	}
 --------------------------------------------------------------------------------------------------
-5. moveEvenItemsToBackLL()
-ListNode *cur;
-	int d,s,i, j;
-
-	s = ll->size;
-
-	if (s < 2)
-		return;
-	cur = ll->head;
-	j = 0;
-	for (i = 0; i < s; i++) {
-		if (cur->item % 2 == 0) {
-			d = cur->item;
-			cur = cur->next;
-			removeNode(ll, j);
-			insertNode(ll, ll->size, d);
-		}
-		else {
-			cur = cur->next;
-			j++;
-		}
+5. moveEvenItemsToBack(LinkedList *ll)
+	ListNode *cur;
+	int x=0,i;
+	if (ll->size<2) return;
+	cur=ll->head;
+	for (i=0;i<ll->size;i++){
+        int c=cur->item;
+        if (c%2==0){
+            insertNode(ll,ll->size,cur->item);
+            cur=cur->next;
+            removeNode(ll,x);
+        }
+        else {
+            x++;
+            cur=cur->next;
 	}
+
+    }
 --------------------------------------------------------------------------------------------------
-6. moveMaxToFrontLL()
+6. moveMaxToFront(ListNode **ptrHead)
 ListNode *pre, *cur;
 	ListNode *preMax = NULL;
 	int maxItem;
