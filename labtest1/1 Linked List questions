@@ -4,12 +4,14 @@
 4. void frontBackSplitLinkedList(LinkedList *ll, LinkedList *resultFrontList, LinkedList *resultBackList) a1q4 //1cur, 4xabi, 2for
 5. moveEvenItemsToBack(LinkedList *ll) t1q2 //1LN,2ix,1for
 6. moveMaxToFront(ListNode **ptrHead) t1q3 //3pre,cur,preMax 1maxItem, c1 empty,c2 one, c3 rest, 1while, c1 first highest, c2rest
-7. removeDuplicatesSortedLL(1) t1q4
-8. split(1) l1q3
-9. duplicateReverse() l1q4
+7. void removeDuplicatesSortedLL(LinkedList *ll) t1q4 //1cur,4ipxs,sanity,1for
+8. int split(ListNode *cur, ListNode **ptrEvenList,ListNode **ptrOddList) l1q3 //3xab,1while
+9. int duplicateReverse(ListNode *cur,ListNode **ptrNewHead) l1q4 //1sanity,1while
 10. concatenate(1) practice quesstion, have not confirmed answers
 11. combineAlternating(1) practice question, have not confirmed answers
 E12. insertDbl() practice question can try
+E13 int removeNode(ListNode **ptrHead,int index) l1q1 //2pre,cur c1empty,c2remove first,c3others(if cant find then return)
+E14 int removeNode2(LinkedList *ll,int index) //2pre,cur, same as above(rmb minus size)
 --------------------------------------------------------------------------------------------------
 1. int insertSortedLL(LinkedList *ll, int item)
 	ListNode *cur;
@@ -144,29 +146,30 @@ ListNode *pre, *cur;
 	*ptrHead = cur;
 	return 0;
 --------------------------------------------------------------------------------------------------
-7. removeDuplicatesSortedLL()
-/* add your code here */
-	if (ll->size<=1) return;
-	ListNode *cur;
-	int i,j=1,x,y=ll->size;
-	cur=ll->head->next;
-	x=ll->head->item;
+7. void removeDuplicatesSortedLL(LinkedList *ll)
 
-	//test for size>1
-	for (i=0;i<y-1;i++){
-        if (cur->item==x){
+	if (ll->size<2) return;
+
+	ListNode *cur;
+	int i,p=1,x,s=ll->size;
+
+	x=ll->head->item;
+	cur=ll->head->next;
+
+	for(i=0;i<s-1;i++){
+        if(cur->item==x){
             cur=cur->next;
-            removeNode(ll,j);
+            removeNode(ll,p);
         }
-        else{
+        else {
             x=cur->item;
-            j++;
             cur=cur->next;
+            p++;
         }
+	}
+	return;
 --------------------------------------------------------------------------------------------------
-8. split()
-/* Write your program code here. */
-    ListNode *temp;
+8. int split(ListNode *cur, ListNode **ptrEvenList,ListNode **ptrOddList)
     int x=1,a=0,b=0;
     while (cur!=NULL){
         if (x==1){
@@ -181,7 +184,7 @@ ListNode *pre, *cur;
         }
         cur=cur->next;
     }
-    return 0;
+    return 1;
 --------------------------------------------------------------------------------------------------
 9. duplicateReverse()
 if (cur==NULL) return -1;
@@ -230,3 +233,54 @@ if (head2==NULL){
 
     if (h1==NULL && h2==NULL) return 0;
     return -1;
+--------------------------------------------------------------------------------------------------
+E12. insertDbl()
+--------------------------------------------------------------------------------------------------
+E13 int removeNode(ListNode **ptrHead,int index)
+	//empty list
+    ListNode *pre,*cur;
+    if ((*ptrHead)==NULL) return -1;
+    //remove first node
+    if (index==0){
+        cur = *ptrHead;
+        *ptrHead=cur->next;
+        free(cur);
+        return 0;
+    }
+    //remove other than first node
+    if((pre=findNode(*ptrHead,index-1))!=NULL){
+        if (pre->next==NULL) return -1;
+        cur = pre->next;
+        pre->next=cur->next;
+        free(cur);
+        return 0;
+    }
+    return -1;
+--------------------------------------------------------------------------------------------------
+E14 int removeNode2(LinkedList *ll,int index)
+	ListNode *cur,*pre;
+    //empty node
+    if (ll->size==0) return 1;
+
+    //if index 0
+    if (index==0){
+        cur=ll->head;
+        ll->head=cur->next;
+        free(cur);
+        ll->size --;
+        return 1;
+    }
+    //find pre and cur, then remove and free
+    if ((pre=findNode2(*ll,index-1))!=NULL){
+        if (pre->next==NULL) return -1;
+        cur=pre->next;
+        pre->next=cur->next;
+        free(cur);
+        ll->size --;
+        return 1;
+    }
+    return 0;
+--------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------
